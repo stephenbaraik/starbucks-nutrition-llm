@@ -123,7 +123,7 @@ still work; LLM narration and chat display a clear availability notice instead o
 - disk caching for repeated LLM responses
 - one retry for invalid LLM query plans
 - filtering expressed as natural language through chat, not static widgets
-- 78 automated tests across ingestion, analytics, LLM safety, charts, and the app itself
+- 74 automated tests across ingestion, analytics, LLM safety, charts, and the app itself
 
 ### Deliberately excluded
 
