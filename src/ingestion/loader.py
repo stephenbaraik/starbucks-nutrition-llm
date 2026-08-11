@@ -9,6 +9,9 @@ from pathlib import Path
 import pandas as pd
 
 from src.config import ENCODINGS
+from src.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 class UnreadableFileError(RuntimeError):
@@ -46,8 +49,10 @@ def read_csv_resilient(path: str | Path) -> tuple[pd.DataFrame, str]:
             attempts.append(f"{enc}: parsed to {df.shape[1]} column(s)")
             continue
 
+        logger.debug("Read %s as %s", path.name, enc)
         return df, enc
 
+    logger.error("Could not read %s with any encoding. Attempts: %s", path.name, attempts)
     raise UnreadableFileError(
         f"Could not read {path.name} with any of {ENCODINGS}. Attempts: {attempts}"
     )

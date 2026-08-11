@@ -9,6 +9,9 @@ from pydantic import ValidationError
 from src.config import LLM_MODEL_PLANNER
 from src.llm.client import LLMClient
 from src.llm.schemas import PlanError, QueryPlan
+from src.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 PLANNER_SYSTEM = """You translate a question about a nutrition dataset into a JSON query plan.
 
@@ -35,6 +38,7 @@ def propose_plan(question: str, available: set[str], previous_error: str | None 
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
+        logger.warning("Planner returned non-JSON output: %r", raw[:200])
         return PlanError(error="The planner did not return valid JSON.")
 
     if "error" in data:
@@ -43,4 +47,5 @@ def propose_plan(question: str, available: set[str], previous_error: str | None 
     try:
         return QueryPlan(**data)
     except ValidationError as exc:
+        logger.warning("Planner returned an invalid plan shape: %s", exc)
         return PlanError(error=str(exc))

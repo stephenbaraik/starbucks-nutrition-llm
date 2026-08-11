@@ -11,6 +11,9 @@ from src.analytics.stats import top_n
 from src.ingestion.pipeline import combined_frame
 from src.llm.planner import propose_plan
 from src.llm.schemas import PlanError, QueryPlan
+from src.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 _AGG_OPS = {"mean", "median", "max", "min", "sum", "count"}
 
@@ -71,4 +74,5 @@ def answer(question: str, datasets: dict, capabilities: dict, client=None) -> di
         except (PlanValidationError, FilterError) as exc:
             previous_error = str(exc)
 
+    logger.info("Question declined after retry: %r (reason=%s)", question, previous_error)
     return {"status": "unsupported", "reason": previous_error or "Could not build a valid plan for this question."}

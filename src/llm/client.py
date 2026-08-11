@@ -16,6 +16,9 @@ import json
 import os
 
 from src.config import CACHE_DIR, LLM_MAX_TOKENS, LLM_MODEL_SUMMARY, LLM_TEMPERATURE
+from src.utils.logging import get_logger
+
+logger = get_logger(__name__)
 
 NO_KEY_NOTICE = "Summaries are unavailable: no GROQ_API_KEY is configured. Statistics, filters and charts are unaffected."
 
@@ -64,6 +67,7 @@ class LLMClient:
             )
             text = resp.choices[0].message.content
         except Exception as exc:  # Groq SDK errors, network errors, rate limits
+            logger.exception("Groq call failed (model=%s, json_mode=%s)", self.model, json_mode)
             return f"The summary service returned an error ({type(exc).__name__}). Please try again later."
 
         path.write_text(json.dumps({"response": text}))
