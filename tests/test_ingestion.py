@@ -101,6 +101,17 @@ def test_loader_raises_on_missing_file():
         read_csv_resilient("does/not/exist.csv")
 
 
+def test_loader_accepts_file_like_buffer():
+    # Streamlit's file_uploader hands a BytesIO-like object, not a path.
+    # Path(buffer) raises TypeError, which is the bug this test pins.
+    import io
+    buffer = io.BytesIO(b"item,calories\nLatte,190\nMocha,290\n")
+    buffer.name = "uploaded.csv"
+    df, encoding = read_csv_resilient(buffer)
+    assert df.shape == (2, 2)
+    assert encoding == "utf-8-sig"
+
+
 # ------------------------------------------------------------ contract tests
 
 @pytest.fixture(scope="module")

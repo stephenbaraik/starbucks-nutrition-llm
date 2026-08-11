@@ -25,3 +25,6 @@ groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API K
 2026-08-11 16:25:37,031 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
 2026-08-11 16:25:47,204 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
 2026-08-11 16:25:47,240 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:29:03,260 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:29:03,312 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:31:54,835 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig

@@ -6,6 +6,8 @@ distinct failure mode from "was the content usable".
 """
 
 from pathlib import Path
+from typing import IO
+
 import pandas as pd
 
 from src.config import ENCODINGS
@@ -18,9 +20,13 @@ class UnreadableFileError(RuntimeError):
     """Raised when no candidate encoding produces a parseable CSV."""
 
 
-def read_csv_resilient(path: str | Path) -> tuple[pd.DataFrame, str]:
+def read_csv_resilient(path_or_buffer: str | Path | IO) -> tuple[pd.DataFrame, str]:
     """
     Read a CSV, trying each candidate encoding in turn.
+
+    Accepts a filesystem path or a file-like object (e.g. Streamlit's
+    UploadedFile), which is why this doesn't unconditionally wrap the input
+    in Path() — that raises TypeError on anything without __fspath__.
 
     Returns the DataFrame and the encoding that worked, so the caller can
     record it in the data quality report. Everything is read as string first;
@@ -28,14 +34,21 @@ def read_csv_resilient(path: str | Path) -> tuple[pd.DataFrame, str]:
     also stops pandas from silently turning a sentinel-heavy column into
     something surprising.
     """
-    path = Path(path)
-    if not path.exists():
-        raise FileNotFoundError(f"No such file: {path}")
+    is_buffer = hasattr(path_or_buffer, "read")
+    if is_buffer:
+        name = getattr(path_or_buffer, "name", "uploaded file")
+    else:
+        path_or_buffer = Path(path_or_buffer)
+        if not path_or_buffer.exists():
+            raise FileNotFoundError(f"No such file: {path_or_buffer}")
+        name = path_or_buffer.name
 
     attempts: list[str] = []
     for enc in ENCODINGS:
+        if is_buffer:
+            path_or_buffer.seek(0)
         try:
-            df = pd.read_csv(path, encoding=enc, dtype=str, keep_default_na=False)
+            df = pd.read_csv(path_or_buffer, encoding=enc, dtype=str, keep_default_na=False)
         except (UnicodeDecodeError, UnicodeError) as exc:
             attempts.append(f"{enc}: {type(exc).__name__}")
             continue
@@ -49,10 +62,10 @@ def read_csv_resilient(path: str | Path) -> tuple[pd.DataFrame, str]:
             attempts.append(f"{enc}: parsed to {df.shape[1]} column(s)")
             continue
 
-        logger.debug("Read %s as %s", path.name, enc)
+        logger.debug("Read %s as %s", name, enc)
         return df, enc
 
-    logger.error("Could not read %s with any encoding. Attempts: %s", path.name, attempts)
+    logger.error("Could not read %s with any encoding. Attempts: %s", name, attempts)
     raise UnreadableFileError(
-        f"Could not read {path.name} with any of {ENCODINGS}. Attempts: {attempts}"
+        f"Could not read {name} with any of {ENCODINGS}. Attempts: {attempts}"
     )
