@@ -4,6 +4,9 @@ tests/.test_logs/
 __pycache__/
 *.pyc
 .pytest_cache/
+.ruff_cache/
 .venv/
 venv/
 docs/screenshots/*.png
+streamlit_deck.log
+.claude/

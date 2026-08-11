@@ -11,12 +11,11 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.config import NUTRIENT_ALIASES
 from src.ingestion.cleaner import (
     DataQualityReport, apply_schema, coerce_numeric,
     drop_empty_rows, resolve_duplicates, infer_caffeine,
 )
-from src.ingestion.loader import read_csv_resilient, UnreadableFileError
+from src.ingestion.loader import read_csv_resilient
 from src.ingestion.pipeline import load_all, capabilities
 
 

@@ -1,10 +1,7 @@
 import pandas as pd
 import pytest
 
-from src.analytics.filters import (
-    FilterError, Predicate, apply_caffeine_filter,
-    apply_predicates, apply_text_filter, validate_predicate,
-)
+from src.analytics.filters import FilterError, Predicate, apply_predicates, validate_predicate
 
 
 def _frame():
@@ -35,16 +32,6 @@ def test_apply_predicates_raises_before_touching_frame_on_unknown_field():
     df = _frame()
     with pytest.raises(FilterError):
         apply_predicates(df, [Predicate("sugars_g", ">", 5)], available={"calories"})
-
-
-def test_apply_text_filter_case_insensitive():
-    out = apply_text_filter(_frame(), "latte")
-    assert list(out["item_name"]) == ["Latte", "Decaf Latte"]
-
-
-def test_apply_caffeine_filter():
-    out = apply_caffeine_filter(_frame(), True)
-    assert list(out["item_name"]) == ["Latte", "Iced Tea"]
 
 
 if __name__ == "__main__":

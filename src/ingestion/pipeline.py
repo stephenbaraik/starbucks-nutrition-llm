@@ -16,8 +16,6 @@ the registry will not.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
-from typing import IO
 
 import pandas as pd
 
@@ -90,6 +88,11 @@ def load_source(path_or_buffer, source: str, overrides: dict | None = None) -> D
     # Conversions keyed by canonical name, since apply_schema renames first.
     conversions = {mapping[raw]: f for raw, f in res.conversions.items() if raw in mapping}
 
+    # The five-stage cleaning pipeline, in order: rename to canonical
+    # headers, coerce strings to numbers, drop rows with no data at all,
+    # resolve duplicate/conflicting rows, then finalise (IDs, sort,
+    # caffeine inference). Each stage appends to the same report so the
+    # UI can show exactly what happened and in what order.
     df = apply_schema(raw, mapping, rep)
     df = coerce_numeric(df, rep, conversions=conversions)
     df = drop_empty_rows(df, rep)
@@ -126,6 +129,9 @@ def capabilities(datasets: dict[str, Dataset]) -> dict:
     unlocks the filters and comparisons its extra columns support.
     """
     per_source = {k: available_nutrients(v.frame) for k, v in datasets.items()}
+    # "present anywhere" (union) vs "present in every source" (intersection)
+    # are different questions: the first drives what's missing entirely,
+    # the second drives what's safe to put in a cross-source comparison.
     all_present = set().union(*per_source.values()) if per_source else set()
     comparable = set.intersection(*per_source.values()) if per_source else set()
 

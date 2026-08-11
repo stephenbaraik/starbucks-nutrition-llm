@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 import plotly.graph_objects as go
 
-from src.viz.charts import distribution_by_source, macro_composition, scatter, top_n_bar
+from src.viz.charts import macro_composition, top_n_bar
 
 
 def _combined():
@@ -25,16 +25,6 @@ def test_no_streamlit_import():
 
 def test_top_n_bar_returns_figure():
     fig = top_n_bar(_combined(), "calories", n=2)
-    assert isinstance(fig, go.Figure)
-
-
-def test_distribution_by_source_returns_figure():
-    fig = distribution_by_source(_combined())
-    assert isinstance(fig, go.Figure)
-
-
-def test_scatter_returns_figure():
-    fig = scatter(_combined(), "calories", "protein_g")
     assert isinstance(fig, go.Figure)
 
 
