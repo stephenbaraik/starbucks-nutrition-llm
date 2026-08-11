@@ -19,3 +19,9 @@ Traceback (most recent call last):
   File "C:\Users\Stevie\Downloads\starbucks-nutrition-llm\.venv\Lib\site-packages\groq\_base_client.py", line 1071, in request
     raise self._make_status_error_from_response(err.response) from None
 groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API Key', 'type': 'invalid_request_error', 'code': 'invalid_api_key'}}
+2026-08-11 16:25:13,991 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:25:14,024 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:25:36,996 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:25:37,031 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:25:47,204 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:25:47,240 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
