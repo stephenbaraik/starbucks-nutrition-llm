@@ -47,5 +47,6 @@ def test_data_briefing_uses_only_loaded_fact_values():
 
 if __name__ == "__main__":
     import sys
+
     import pytest
     sys.exit(pytest.main([__file__, "-q"]))

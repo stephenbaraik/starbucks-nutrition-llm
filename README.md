@@ -119,9 +119,9 @@ src/
 
 | Doc | Covers |
 |---|---|
-| [`docs/SPEC.md`](docs/SPEC.md) | The original brief, verbatim, plus a requirement-to-code traceability table and the current system design |
+| [`docs/SPEC.md`](docs/SPEC.md) | The original brief, verbatim, plus a requirement-to-code traceability table |
+| [`docs/SYSTEM_DESIGN.md`](docs/SYSTEM_DESIGN.md) | End-to-end system design: approach, how to run, module reference, architecture diagrams, design decisions and trade-offs |
 | [`docs/DATA_NOTES.md`](docs/DATA_NOTES.md) | Audit findings for the supplied CSVs |
-| [`docs/PRESENTATION_CONTENT.md`](docs/PRESENTATION_CONTENT.md) | Slide-by-slide content for the submission deck |
 
 ## Status
 

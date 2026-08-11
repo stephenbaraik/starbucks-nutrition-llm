@@ -28,5 +28,6 @@ def test_file_handler_captures_debug_even_when_console_is_info():
 
 if __name__ == "__main__":
     import sys
+
     import pytest
     sys.exit(pytest.main([__file__, "-q"]))

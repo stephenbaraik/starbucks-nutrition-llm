@@ -22,18 +22,22 @@ ask the user.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
-import re
 
 import pandas as pd
 
 from src.config import (
-    NUTRIENT_ALIASES, ITEM_NAME_ALIASES, EXPECTED_UNITS, UNIT_CONVERSIONS,
-    FUZZY_ACCEPT_RATIO, FUZZY_SUGGEST_RATIO,
+    EXPECTED_UNITS,
+    FUZZY_ACCEPT_RATIO,
+    FUZZY_SUGGEST_RATIO,
+    ITEM_NAME_ALIASES,
+    NUTRIENT_ALIASES,
+    UNIT_CONVERSIONS,
 )
 
-UNIT_PATTERN = re.compile(r"\(\s*(kcal|kj|mg|g|kg|oz|ml|l|%\s*dv|%)\s*\)", re.I)
+UNIT_PATTERN = re.compile(r"\(\s*(kcal|kj|mg|g|kg|oz|ml|l|%\s*dv|%)\s*\)", re.IGNORECASE)
 
 # Reverse index: normalised alias -> canonical column
 _ALIAS_INDEX: dict[str, str] = {}

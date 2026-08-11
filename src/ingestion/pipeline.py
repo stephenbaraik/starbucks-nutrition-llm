@@ -20,12 +20,16 @@ from dataclasses import dataclass
 import pandas as pd
 
 from src.config import DRINKS_FILE, FOOD_FILE, NUTRIENT_COLS, NUTRIENT_LABELS
-from src.ingestion.loader import read_csv_resilient
-from src.ingestion.resolver import ResolutionReport, resolve_columns, apply_overrides
 from src.ingestion.cleaner import (
-    DataQualityReport, apply_schema, coerce_numeric,
-    drop_empty_rows, resolve_duplicates, finalise,
+    DataQualityReport,
+    apply_schema,
+    coerce_numeric,
+    drop_empty_rows,
+    finalise,
+    resolve_duplicates,
 )
+from src.ingestion.loader import read_csv_resilient
+from src.ingestion.resolver import ResolutionReport, apply_overrides, resolve_columns
 
 
 @dataclass

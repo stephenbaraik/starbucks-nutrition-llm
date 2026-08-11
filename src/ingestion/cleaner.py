@@ -8,21 +8,20 @@ claim in the README into something a reviewer can see on screen.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
 import re
+from dataclasses import asdict, dataclass, field
 
 import numpy as np
 import pandas as pd
 
 from src.config import (
-    CANONICAL,
-    NUTRIENT_COLS,
-    NULL_SENTINELS,
-    DUPLICATE_POLICY,
-    CAFFEINE_TOKENS,
     CAFFEINE_FREE_TOKENS,
+    CAFFEINE_TOKENS,
+    CANONICAL,
+    DUPLICATE_POLICY,
+    NULL_SENTINELS,
+    NUTRIENT_COLS,
 )
-
 
 # --------------------------------------------------------------------------
 # Report

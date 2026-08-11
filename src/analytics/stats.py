@@ -8,7 +8,7 @@ name, so a nutrient absent from the frame is never silently assumed present.
 
 from __future__ import annotations
 
-from typing import Iterable
+from collections.abc import Iterable
 
 import pandas as pd
 

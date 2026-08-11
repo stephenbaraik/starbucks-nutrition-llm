@@ -1,6 +1,6 @@
 import json
 
-from src.llm.client import LLMClient, NO_KEY_NOTICE
+from src.llm.client import NO_KEY_NOTICE, LLMClient
 
 
 def test_disabled_without_api_key(monkeypatch):
@@ -49,5 +49,6 @@ def test_sdk_exception_returns_notice_not_traceback(monkeypatch, tmp_path):
 
 if __name__ == "__main__":
     import sys
+
     import pytest
     sys.exit(pytest.main([__file__, "-q"]))

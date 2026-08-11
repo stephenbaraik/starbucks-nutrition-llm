@@ -1,7 +1,12 @@
 import pandas as pd
 import pytest
 
-from src.analytics.filters import FilterError, Predicate, apply_predicates, validate_predicate
+from src.analytics.filters import (
+    FilterError,
+    Predicate,
+    apply_predicates,
+    validate_predicate,
+)
 
 
 def _frame():

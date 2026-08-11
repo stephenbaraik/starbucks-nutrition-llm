@@ -40,5 +40,6 @@ def test_macro_composition_returns_figure():
 
 if __name__ == "__main__":
     import sys
+
     import pytest
     sys.exit(pytest.main([__file__, "-q"]))

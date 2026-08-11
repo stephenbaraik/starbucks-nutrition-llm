@@ -51,5 +51,6 @@ def test_top_n_excludes_nulls_and_sorts_descending():
 
 if __name__ == "__main__":
     import sys
+
     import pytest
     sys.exit(pytest.main([__file__, "-q"]))

@@ -12,12 +12,15 @@ import pandas as pd
 import pytest
 
 from src.ingestion.cleaner import (
-    DataQualityReport, apply_schema, coerce_numeric,
-    drop_empty_rows, resolve_duplicates, infer_caffeine,
+    DataQualityReport,
+    apply_schema,
+    coerce_numeric,
+    drop_empty_rows,
+    infer_caffeine,
+    resolve_duplicates,
 )
 from src.ingestion.loader import read_csv_resilient
-from src.ingestion.pipeline import load_all, capabilities
-
+from src.ingestion.pipeline import capabilities, load_all
 
 # ---------------------------------------------------------------- unit tests
 
@@ -165,7 +168,7 @@ def test_every_drink_has_a_caffeine_verdict(datasets):
 
 # ------------------------------------------------------- resolver / upload
 
-from src.ingestion.resolver import resolve_columns, normalise, apply_overrides
+from src.ingestion.resolver import apply_overrides, normalise, resolve_columns
 
 
 @pytest.mark.parametrize("raw,expected", [

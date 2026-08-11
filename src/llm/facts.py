@@ -13,8 +13,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 
-from src.analytics.compare import comparison_caveat, normalised_comparison, raw_comparison
+from src.analytics.compare import (
+    comparison_caveat,
+    normalised_comparison,
+    raw_comparison,
+)
 from src.analytics.stats import derived_ratios, describe, top_n
 from src.config import NUTRIENT_LABELS
 
@@ -51,7 +56,7 @@ def build_facts(datasets: dict, capabilities: dict, top_n_count: int = 3) -> dic
         top = top_n(df, "calories", n=top_n_count) if "calories" in df.columns else df.head(0)
         ratios = derived_ratios(df)
         mean_fat_to_protein = ratios["fat_to_protein"].mean() if "fat_to_protein" in ratios else None
-        has_ratio = mean_fat_to_protein is not None and mean_fat_to_protein == mean_fat_to_protein
+        has_ratio = mean_fat_to_protein is not None and not math.isnan(mean_fat_to_protein)
         sources[name] = {
             "n_items": len(df),
             "rows_excluded_no_data": dataset.report.rows_no_nutrition,
