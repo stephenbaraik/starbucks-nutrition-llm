@@ -1,7 +1,7 @@
 import json
 
 from src.ingestion.pipeline import capabilities, load_all
-from src.llm.facts import build_facts, facts_digest
+from src.llm.facts import build_facts, data_briefing, facts_digest
 
 
 def test_facts_has_mandatory_keys():
@@ -34,6 +34,15 @@ def test_facts_digest_stable_for_same_input():
     caps = capabilities(datasets)
     facts = build_facts(datasets, caps)
     assert facts_digest(facts) == facts_digest(facts)
+
+
+def test_data_briefing_uses_only_loaded_fact_values():
+    datasets = load_all()
+    facts = build_facts(datasets, capabilities(datasets))
+    briefing = data_briefing(facts)
+    assert "74 drinks and 113 food items" in briefing
+    assert "138.72 kcal for drinks and 356.64 kcal for food items" in briefing
+    assert "Sugars (g)" in briefing
 
 
 if __name__ == "__main__":
