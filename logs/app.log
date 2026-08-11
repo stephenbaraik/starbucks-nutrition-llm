@@ -1,0 +1,19 @@
+2026-08-11 16:10:15,798 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:10:15,829 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:10:15,864 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:10:15,893 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:10:15,928 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:10:15,957 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:10:15,989 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:10:16,017 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:10:16,093 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 16:10:16,121 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 16:10:16,808 ERROR src.llm.client: Groq call failed (model=llama-3.3-70b-versatile, json_mode=False)
+Traceback (most recent call last):
+  File "C:\Users\Stevie\Downloads\starbucks-nutrition-llm\src\llm\client.py", line 58, in complete
+    resp = self._client.chat.completions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Stevie\Downloads\starbucks-nutrition-llm\tests\test_llm_client.py", line 41, in create
+    raise RuntimeError("boom")
+RuntimeError: boom
+2026-08-11 16:10:16,808 ERROR test.writes: boom-marker-12345
