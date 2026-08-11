@@ -37,12 +37,12 @@ pytest -q                   # tests
 - [x] Ingestion layer with encoding fallback, sentinel handling, dedup, audit trail
 - [x] Column resolver (uploads with unknown headers)
 - [x] Capability registry
-- [x] Test suite (38 tests)
-- [ ] Analytics layer
-- [ ] Charts
-- [ ] LLM summarisation
-- [ ] NL query planner
-- [ ] Streamlit UI
+- [x] Analytics layer (descriptive stats, null-safe ratios, comparison, filters)
+- [x] Charts (top-N, distribution, macro composition, scatter)
+- [x] LLM summarisation (facts payload, Groq client, cache, error containment)
+- [x] NL query planner (plan -> validate -> execute -> narrate, one retry)
+- [x] Streamlit UI (overview, explore, charts, ask)
+- [x] Test suite (65 tests)
 
 ## Data notes
 
