@@ -42,6 +42,7 @@ for _canon, _aliases in NUTRIENT_ALIASES.items():
         _ALIAS_INDEX[_a] = _canon
 
 
+# What resolve_columns() decided about a single raw header, and why.
 @dataclass
 class ColumnMatch:
     raw: str
@@ -58,6 +59,9 @@ class ColumnMatch:
         return self.confidence in ("SUGGEST", "NONE")
 
 
+# All the ColumnMatch results for one file, plus the item-name column
+# (which is chosen separately, see _pick_item_column) and any warnings
+# worth surfacing to the user before they trust the mapping.
 @dataclass
 class ResolutionReport:
     matches: list[ColumnMatch] = field(default_factory=list)
@@ -165,6 +169,10 @@ def _pick_item_column(df: pd.DataFrame, claimed: set[str]) -> tuple[str | None, 
         if normalise(c) in ITEM_NAME_ALIASES:
             return c, "alias match"
 
+    # No alias matched, so fall back to a heuristic: an item-name column
+    # tends to be mostly text (not numbers) and mostly unique (menu items
+    # rarely repeat). Weight text-ness higher since a numeric ID column can
+    # also be fairly unique.
     best, best_score = None, -1.0
     for c in candidates:
         col = df[c].astype(str)
@@ -185,6 +193,9 @@ def resolve_columns(df: pd.DataFrame) -> ResolutionReport:
     claimed: set[str] = set()
     taken_canonicals: set[str] = set()
 
+    # Walk every header once, scoring it against the alias table and
+    # sorting the result into one of the four confidence tiers described
+    # at the top of this file.
     for raw in df.columns:
         token = normalise(raw)
         unit = extract_unit(raw)

@@ -68,10 +68,15 @@ class DataQualityReport:
 # --------------------------------------------------------------------------
 
 def _slug(name: str) -> str:
-    """Stable, filesystem-safe key from a display name."""
+    """Stable, filesystem-safe key from a display name.
+
+    "Iced Caramel Macchiato®" -> "iced_caramel_macchiato". Used to build
+    item_id, so it needs to be deterministic and free of characters that
+    would be awkward in a dict key or URL.
+    """
     s = name.strip().lower()
-    s = re.sub(r"[®™©]", "", s)
-    s = re.sub(r"[^a-z0-9]+", "_", s)
+    s = re.sub(r"[®™©]", "", s)          # strip trademark/registered/copyright marks
+    s = re.sub(r"[^a-z0-9]+", "_", s)    # collapse everything else (spaces, punctuation) to underscores
     return s.strip("_")
 
 
@@ -134,6 +139,9 @@ def coerce_numeric(
     """
     df = df.copy()
     for col in [c for c in NUTRIENT_COLS if c in df.columns]:
+        # Work in strings first: sentinels like "-" or "N/A" have to be
+        # counted and swapped for real NaN before pandas ever tries to
+        # coerce the column to a number.
         as_str = df[col].astype(str).str.strip()
         n_sentinel = as_str.isin(NULL_SENTINELS).sum()
         if n_sentinel:
@@ -144,6 +152,9 @@ def coerce_numeric(
         cleaned = cleaned.str.replace(",", "", regex=False)
         cleaned = cleaned.str.replace(r"[^0-9.\-]", "", regex=True).replace("", np.nan)
 
+        # Anything that still won't parse becomes NaN via errors="coerce"
+        # rather than raising — we count what got lost below instead of
+        # crashing on one bad cell.
         before_valid = cleaned.notna().sum()
         df[col] = pd.to_numeric(cleaned, errors="coerce")
 
@@ -193,12 +204,16 @@ def resolve_duplicates(df: pd.DataFrame, rep: DataQualityReport, policy: str = D
     """
     df = df.copy()
 
+    # Step 1: rows that are 100% identical are just repeated data entry —
+    # drop them with no explanation needed beyond the count.
     before = len(df)
     df = df.drop_duplicates()
     rep.exact_duplicates_removed = before - len(df)
     if rep.exact_duplicates_removed:
         rep.notes.append(f"Removed {rep.exact_duplicates_removed} exact duplicate row(s)")
 
+    # Step 2: same item_name, different values — this is the harder case,
+    # and it's where the chosen policy actually matters.
     conflicted = df["item_name"].duplicated(keep=False)
     n_conflicts = df.loc[conflicted, "item_name"].nunique()
     if not n_conflicts:
@@ -212,6 +227,8 @@ def resolve_duplicates(df: pd.DataFrame, rep: DataQualityReport, policy: str = D
     )
 
     if policy == "keep_all":
+        # Don't discard anything — rename the repeats so each stays a
+        # distinct, addressable row instead of colliding on item_name.
         df["_n"] = df.groupby("item_name").cumcount()
         df["item_name"] = np.where(
             df["_n"] > 0, df["item_name"] + " (variant " + (df["_n"] + 1).astype(str) + ")",
@@ -222,6 +239,9 @@ def resolve_duplicates(df: pd.DataFrame, rep: DataQualityReport, policy: str = D
     if policy == "first":
         return df.drop_duplicates(subset="item_name", keep="first")
 
+    # Default "completeness" policy: keep whichever row has the most
+    # non-null nutrients, breaking ties on higher calories (see the
+    # docstring above for why that direction was chosen).
     present = [c for c in NUTRIENT_COLS if c in df.columns]
     df["_completeness"] = df[present].notna().sum(axis=1)
     df["_cal"] = df["calories"].fillna(-1)
@@ -238,11 +258,14 @@ def finalise(df: pd.DataFrame, source: str, rep: DataQualityReport) -> pd.DataFr
     df = df.copy()
     df["item_name"] = df["item_name"].astype(str).str.strip()
     df["source"] = source
-    df["item_id"] = source + ":" + df["item_name"].map(_slug)
+    df["item_id"] = source + ":" + df["item_name"].map(_slug)  # e.g. "drinks:caramel_macchiato"
 
+    # Only drinks get a caffeine guess — it wouldn't mean much for food items.
     if source == "drinks":
         df["caffeine_inferred"] = df["item_name"].map(infer_caffeine)
 
+    # A nutrient counts as "absent" if the column never existed, or if it
+    # exists but every value in it is null — either way, nothing to report.
     rep.absent_nutrients = [c for c in NUTRIENT_COLS if c not in df.columns or df[c].isna().all()]
     if rep.absent_nutrients:
         rep.notes.append(f"Nutrients absent from this source: {rep.absent_nutrients}")

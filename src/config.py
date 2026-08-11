@@ -12,11 +12,16 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+# Load GROQ_API_KEY (and anything else) from .env into the process
+# environment before any other module tries to read it.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(PROJECT_ROOT / ".env")
 
 DATA_RAW = PROJECT_ROOT / "data" / "raw"
 
+# Bundled sample files, used by the CLI (main.py) and as test fixtures.
+# The Streamlit app never falls back to these — it always asks for an
+# upload first.
 DRINKS_FILE = DATA_RAW / "starbucks-menu-nutrition-drinks.csv"
 FOOD_FILE = DATA_RAW / "starbucks-menu-nutrition-food.csv"
 
@@ -173,8 +178,10 @@ CAFFEINE_FREE_TOKENS = [
 # --------------------------------------------------------------------------
 # Groq deprecates model IDs on a rolling basis. Confirm against
 # GET https://api.groq.com/openai/v1/models before submitting.
+# A bigger model narrates (needs to write well); a small, fast one plans
+# (just needs to produce valid, constrained JSON).
 LLM_MODEL_SUMMARY = "llama-3.3-70b-versatile"
 LLM_MODEL_PLANNER = "llama-3.1-8b-instant"
-LLM_TEMPERATURE = 0.2
-LLM_MAX_TOKENS = 800
-CACHE_DIR = PROJECT_ROOT / ".cache"
+LLM_TEMPERATURE = 0.2  # low but not zero — factual narration, not a coin flip
+LLM_MAX_TOKENS = 800   # generous for a table + a few sentences, not a novel
+CACHE_DIR = PROJECT_ROOT / ".cache"  # disk cache of (prompt -> response), see llm/client.py

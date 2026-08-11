@@ -28,3 +28,71 @@ groq.AuthenticationError: Error code: 401 - {'error': {'message': 'Invalid API K
 2026-08-11 16:29:03,260 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
 2026-08-11 16:29:03,312 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
 2026-08-11 16:31:54,835 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 17:20:56,662 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 17:20:56,703 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 17:35:00,538 WARNING src.llm.planner: Planner returned an invalid plan shape: 3 validation errors for QueryPlan
+dataset
+  Field required [type=missing, input_value={'question': 'What is the...than 5 grams of fiber?'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing
+metric
+  Field required [type=missing, input_value={'question': 'What is the...than 5 grams of fiber?'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing
+op
+  Field required [type=missing, input_value={'question': 'What is the...than 5 grams of fiber?'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/missing
+2026-08-11 17:38:09,553 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 17:38:09,590 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 17:38:12,524 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 17:38:12,558 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 18:24:25,983 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 18:24:26,016 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 18:30:07,661 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 18:30:07,698 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 18:41:24,138 WARNING src.llm.planner: Planner returned an invalid plan shape: 1 validation error for QueryPlan
+filters
+  Input should be a valid list [type=list_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/list_type
+2026-08-11 19:14:54,739 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:14:54,774 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:15:46,404 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:15:46,494 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:16:59,878 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:16:59,915 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:17:39,957 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:17:39,993 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:18:16,693 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:18:16,730 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:44:44,112 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:44:44,164 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:45:37,278 INFO src.llm.executor: Question declined after retry: 'Which drink has the most caffeine?' (reason=caffeine_mg is not an available field)
+2026-08-11 19:47:52,896 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:47:52,988 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:48:56,304 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:48:56,384 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 19:54:14,207 INFO src.llm.executor: Question declined after retry: 'which food item has the most prohello theretein' (reason=Invalid field: prohello theretein. Available fields are: calories, fiber_g, protein_g, sodium_mg, total_carbs_g, total_fat_g)
+2026-08-11 19:57:53,742 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 19:57:53,786 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:03:55,557 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:03:55,602 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:05:36,454 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:05:36,518 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:12:28,353 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:12:28,445 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:39:44,461 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:39:44,498 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:45:57,685 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:45:57,718 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:46:01,304 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:46:01,337 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:46:20,359 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:46:20,387 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:49:34,178 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:49:34,214 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:49:44,884 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:49:44,916 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:49:54,921 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:49:54,948 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:54:48,823 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:54:48,858 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16
+2026-08-11 20:56:33,601 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-drinks.csv as utf-8-sig
+2026-08-11 20:56:33,645 DEBUG src.ingestion.loader: Read starbucks-menu-nutrition-food.csv as utf-16

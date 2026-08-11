@@ -34,6 +34,8 @@ def read_csv_resilient(path_or_buffer: str | Path | IO) -> tuple[pd.DataFrame, s
     also stops pandas from silently turning a sentinel-heavy column into
     something surprising.
     """
+    # Anything with a .read() method (Streamlit's UploadedFile, a BytesIO,
+    # ...) is treated as a buffer; anything else is assumed to be a path.
     is_buffer = hasattr(path_or_buffer, "read")
     if is_buffer:
         name = getattr(path_or_buffer, "name", "uploaded file")
@@ -45,6 +47,9 @@ def read_csv_resilient(path_or_buffer: str | Path | IO) -> tuple[pd.DataFrame, s
 
     attempts: list[str] = []
     for enc in ENCODINGS:
+        # A buffer's read position stays wherever the previous failed
+        # attempt left it — rewind before every retry or the next encoding
+        # would be reading from the middle of the file, not the start.
         if is_buffer:
             path_or_buffer.seek(0)
         try:
