@@ -1,0 +1,10 @@
+pandas>=2.2
+pydantic>=2.7
+ruff>=0.5
+numpy>=1.26
+matplotlib>=3.8
+plotly>=5.20
+streamlit>=1.35
+groq>=0.11
+python-dotenv>=1.0
+pytest>=8.0
